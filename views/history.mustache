@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Histórico de Compras</title>
+</head>
+<body>
+  <h1>Histórico de Compras</h1>
+  {{#compras}}
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+      <h2>Compra em: {{data}}</h2>
+      <ul>
+        {{#itens}}
+          <li>
+            Ingresso: {{ingresso.nome}} – Quantidade: {{quantidade}} – Preço: {{ingresso.preco}}<br/>
+            <!-- Link para detalhes do ingresso -->
+            <a href="/ticket/{{../_id}}/{{ingresso._id}}?token={{token}}">Ver Detalhes</a>
+          </li>
+        {{/itens}}
+      </ul>
+    </div>
+  {{/compras}}
+  {{^compras}}
+    <p>Nenhuma compra encontrada.</p>
+  {{/compras}}
+</body>
+</html>

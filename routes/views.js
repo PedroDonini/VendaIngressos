@@ -20,4 +20,19 @@ router.use((req, res, next) => {
   next();
 });
 
+// Página de histórico de compras (apenas para usuário autenticado)
+router.get('/history', async (req, res) => {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+  try {
+    const compras = await Compra.find({ usuario: req.user.id })
+      .populate('itens.ingresso')
+      .sort({ data: -1 });
+    res.render('history', { compras, token: req.query.token });
+  } catch (error) {
+    res.status(500).send('Erro ao buscar histórico de compras');
+  }
+});
+
 module.exports = router;
