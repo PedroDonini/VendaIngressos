@@ -22,10 +22,14 @@ app.set('views', __dirname + '/views');
 
 // Importação das rotas
 const userRoutes = require('./routes/users');
+const ticketRoutes = require('./routes/tickets');
+const salesRoutes = require('./routes/sales');
 const viewRoutes = require('./routes/views');
 
 // Rotas da API REST
 app.use('/api/users', userRoutes);
+app.use('/api/tickets', ticketRoutes);
+app.use('/api/sales', salesRoutes);
 
 // Rotas para as views (Mustache)
 app.use('/', viewRoutes);
