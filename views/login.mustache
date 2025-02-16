@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Login</title>
+</head>
+<body>
+  <h1>Login</h1>
+  <form id="loginForm">
+    <label>Email:</label>
+    <input type="email" id="email" required /><br/>
+    <label>Senha:</label>
+    <input type="password" id="senha" required /><br/>
+    <button type="submit">Login</button>
+  </form>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+      const res = await fetch('/api/users/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, senha })
+      });
+      const data = await res.json();
+      if (data.token) {
+        // Armazena o token e redireciona para o histórico de compras
+        localStorage.setItem('token', data.token);
+        window.location.href = '/history?token=' + data.token;
+      } else {
+        alert('Erro no login: ' + data.message);
+      }
+    });
+  </script>
+</body>
+</html>
